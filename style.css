@@ -1,0 +1,62 @@
+/*Estilo h2*/
+h2{
+	font-family: arial;
+	font-size: large;
+	font-weight: 700;
+	color: blue;
+	text-align:left;
+	padding: 10px;
+	text-align:center;
+}
+
+/* Estilo para las etiquetas de los formularios */
+label {
+	font-family: 'Arial', sans-serif;
+	font-size: medium;
+	font-weight: bold;
+	color: #333;
+	padding: 20px;
+}
+
+div {
+	padding-bottom: 10px;	
+}
+/* Estilo para las entradas de texto en formulario*/
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+	text-transform: uppercase;
+	width: 95%;
+	padding-left: 8px;
+	padding:8px;
+	margin-bottom: 10px;
+	margin-left: 20px;
+	margin-top: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#origen, #destino, #nombre {
+	text-transform: uppercase;
+	width: 95%;
+	padding-left: 8px;
+	padding:8px;
+	margin-bottom: 10px;
+	margin-left: 20px;
+	margin-top: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type='submit']{
+	background-color: #4caf50;
+	color: #fff;
+	padding:10px 15px;
+	width: calc(80% - 20px);
+	margin: 0 10%;
+	margin-top: 22px;
+	border-radius: 4px;
+	cursor: pointer;
+}

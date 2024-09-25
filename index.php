@@ -41,6 +41,20 @@
                 formulario
                 return true;
                 }
+
+            function validarBusqueda() {
+                var origenBusqueda = document.getElementById("origen_busqueda").value;
+                var destinoBusqueda = document.getElementById("destino_busqueda").value;
+                var fechaBusqueda = document.getElementById("fecha_busqueda").value;
+
+                if (origenBusqueda === "" || destinoBusqueda === "" || fechaBusqueda === "") {
+                    alert("Por favor, complete todos los campos de búsqueda.");
+                    return false;
+                }
+                return true;
+            }
+
+
             </script>
     </head>
 
@@ -109,6 +123,38 @@
         
         <input type="submit" name="registrar" value="Agregar">
         </form>
+
+<h1>Buscar Vuelo</h1>
+<form method="post" onsubmit="return validarBusqueda()">
+    <label for="origen_busqueda">Ciudad de origen:</label>
+    <select id="origen_busqueda" name="origen_busqueda" required>
+        <option value="Santiago">Santiago</option>
+        <option value="Rio de Janeiro">Río de Janeiro</option>
+        <option value="Buenos Aires">Buenos Aires</option>
+        <option value="Lima">Lima</option>
+        <option value="Cartagena">Cartagena</option>
+        <option value="Paris">París</option>
+    </select>
+
+    <label for="destino_busqueda">Ciudad de destino:</label>
+    <select id="destino_busqueda" name="destino_busqueda" required>
+        <option value="Santiago">Santiago</option>
+        <option value="Rio de Janeiro">Río de Janeiro</option>
+        <option value="Buenos Aires">Buenos Aires</option>
+        <option value="Lima">Lima</option>
+        <option value="Cartagena">Cartagena</option>
+        <option value="Paris">París</option>
+    </select>
+
+    <label for="fecha_busqueda">Seleccione la fecha de vuelo:</label>
+    <input type="date" id="fecha_busqueda" name="fecha_busqueda" required><br>
+
+    <input type="submit" name="buscar" value="Buscar">
+</form>
+
+</form>
+
+        
     <?php
         include("conexion.php");
         // Verifica si el botón "registro" ha sido presionado
@@ -162,6 +208,38 @@
             } else {
             echo '<h3 class="mal">¡Por favor complete todos los campos!</h3>';
             }
+        // Para buscar vuelos
+        if (isset($_POST['buscar'])) {
+            // Captura los datos del formulario de búsqueda
+            $origen_busqueda = $_POST['origen_busqueda'];
+            $destino_busqueda = $_POST['destino_busqueda'];
+            $fecha_busqueda = $_POST['fecha_busqueda'];
+
+            // Realiza la consulta a la base de datos
+            $consulta_busqueda = "SELECT * FROM vuelo WHERE origen = '$origen_busqueda' AND destino = '$destino_busqueda' AND fecha = '$fecha_busqueda'";
+            $resultado_busqueda = mysqli_query($conex, $consulta_busqueda);
+
+            // Verifica si hay resultados
+            if (mysqli_num_rows($resultado_busqueda) > 0) {
+                echo '<h2>Resultados de búsqueda:</h2>';
+                echo '<table>';
+                echo '<tr><th>Origen</th><th>Destino</th><th>Fecha</th><th>Plazas Disponibles</th><th>Precio</th></tr>';
+                
+                // Muestra los resultados
+                while ($vuelo = mysqli_fetch_assoc($resultado_busqueda)) {
+                    echo '<tr>';
+                    echo '<td>' . $vuelo['origen'] . '</td>';
+                    echo '<td>' . $vuelo['destino'] . '</td>';
+                    echo '<td>' . $vuelo['fecha'] . '</td>';
+                    echo '<td>' . $vuelo['plazas_disponibles'] . '</td>';
+                    echo '<td>' . $vuelo['precio'] . '</td>';
+                    echo '</tr>';
+                }
+                echo '</table>';
+            } else {
+                echo '<h3 class="mal">No se encontraron vuelos que coincidan con su búsqueda.</h3>';
+            }
+        } 
         ?>
     </body>
 </html>
